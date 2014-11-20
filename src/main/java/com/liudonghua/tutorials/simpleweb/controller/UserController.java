@@ -112,6 +112,7 @@ public class UserController extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		// set HTTP ContentType header of "application/json"
 		response.setContentType("application/json");
+		response.addHeader("Access-Control-Allow-Origin", "*");
 		PrintWriter out = response.getWriter();
 		boolean isUserStatisticsRequest = isUserStatisticsRequest(request);
 		int id = isSingleUserInfoRequest(request);
@@ -142,6 +143,7 @@ public class UserController extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("application/json");
+		response.addHeader("Access-Control-Allow-Origin", "*");
 		PrintWriter out = response.getWriter();
 		String json = getBody(request);
 		JSONObject jsonObject = JSONObject.fromObject(json);
@@ -158,6 +160,7 @@ public class UserController extends HttpServlet {
 	protected void doPut(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("application/json");
+		response.addHeader("Access-Control-Allow-Origin", "*");
 		PrintWriter out = response.getWriter();
 		String json = getBody(request);
 		JSONObject jsonObject = JSONObject.fromObject(json);
@@ -174,12 +177,24 @@ public class UserController extends HttpServlet {
 	protected void doDelete(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("application/json");
+		response.addHeader("Access-Control-Allow-Origin", "*");
 		PrintWriter out = response.getWriter();
 		int id = isSingleUserInfoRequest(request);
 		if (id > 0) {
 			userDao.deleteUser(id);
 			out.print("{\"msg\":\"successful\"}");
 		}
+	}
+
+	@Override
+	protected void doOptions(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// http://stackoverflow.com/questions/1099787/jquery-ajax-post-sending-options-as-request-method-in-firefox
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+		response.addHeader("Access-Control-Max-Age", "86400");
+		response.addHeader("Access-Control-Allow-Headers", "User-Agent,Origin,Cache-Control,Content-Type,x-zd,Date,Server,withCredentials");
+		super.doOptions(request, response);
 	}
 
 }

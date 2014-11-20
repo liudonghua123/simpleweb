@@ -103,6 +103,7 @@
 
     $.ajaxPrefilter( function( options, originalOptions, jqXHR ) {
       options.url = '/simpleweb' + options.url;
+      options.crossDomain = true;
     });
 
     var Users = Backbone.Collection.extend({
