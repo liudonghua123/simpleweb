@@ -10,3 +10,14 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+# mac os x meta files
+.DS_Store
+
+# maven build directory
+target
+
+# eclipse project files
+.project
+.classpath
+.settings

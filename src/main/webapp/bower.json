@@ -1,0 +1,32 @@
+{
+  "name": "simpleweb",
+  "version": "0.0.0",
+  "authors": [
+    "liudonghua123 <liudonghua123@gmail.com>"
+  ],
+  "main": "index.html",
+  "moduleType": [
+    "amd"
+  ],
+  "license": "MIT",
+  "homepage": "liudonghua.com",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.1",
+    "backbone": "~0.9.2",
+    "underscore": "~1.4.2"
+  },
+  "install": {
+    "path": {
+      "js": "js/",
+      "css": "css/",
+      "fonts": "fonts/"
+    }
+  }
+}
