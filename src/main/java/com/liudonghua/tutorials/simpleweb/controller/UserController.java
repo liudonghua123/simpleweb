@@ -5,12 +5,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,6 +27,7 @@ import com.liudonghua.tutorials.simpleweb.model.User;
 /**
  * Servlet implementation class UserController
  */
+@WebServlet(name="UserController", urlPatterns="/users/*")
 public class UserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -79,7 +82,7 @@ public class UserController extends HttpServlet {
 			InputStream inputStream = request.getInputStream();
 			if (inputStream != null) {
 				bufferedReader = new BufferedReader(new InputStreamReader(
-						inputStream));
+						inputStream, StandardCharsets.UTF_8));
 				char[] charBuffer = new char[128];
 				int bytesRead = -1;
 				while ((bytesRead = bufferedReader.read(charBuffer)) > 0) {
