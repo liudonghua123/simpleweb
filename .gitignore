@@ -21,3 +21,9 @@ target
 .project
 .classpath
 .settings
+
+# bower dependency files
+bower_components
+
+# node module files
+node_modules
