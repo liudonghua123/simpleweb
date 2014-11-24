@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
@@ -9,33 +9,9 @@
     <body>
         <div class="container">
             <h1>User Manager</h1>
-            <!-- Modal -->
-            <script type="text/template" id="statistics-modal-template">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="myModalLabel">User Statistics</h4>
-                        </div>
-                        <div class="modal-body">
-                            Min Salary: <span id="min_salary"><%= statistics ? statistics.get('min_salary') : '' %></span></br>
-                            Max Salary: <span id="max_salary"><%= statistics ? statistics.get('max_salary') : '' %></span></br>
-                            Avg Salary: <span id="avg_salary"><%= statistics ? statistics.get('avg_salary') : '' %></span></br>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </script>
             <hr />
             <div class="page"></div>
         </div>
-        <script src="bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
-        <script src="bower_components/bootstrap/dist/js/bootstrap.js" type="text/javascript"></script>
-        <script src="bower_components/bootstrapValidator/dist/js/bootstrapValidator.js" type="text/javascript"></script>
-        <script src="bower_components/bootstrapValidator/dist/js/language/zh_CN.js" type="text/javascript"></script>
-        <script src="bower_components/underscore/underscore.js" type="text/javascript"></script>
-        <script src="bower_components/backbone/backbone.js"></script>
         <script type="text/template" id="user-list-template">
             <button id="show_statistics" type="button" class="btn btn-primary" data-toggle="modal">Show statistics</button>
             &nbsp;
@@ -61,7 +37,7 @@
         </script>
         <script type="text/template" id="edit-user-template">
             <form class="edit-user-form">
-              <legend><%= user ? 'Edit' : 'New' %> User</legend>
+            <legend><%= user ? 'Edit' : 'New' %> User</legend>
             <div class="form-group">
                 <label>Username</label>
                 <input name="username" type="text" required placeholder="Enter username, can only contain numbers or letters, minimum length of 5" pattern="[0-9A-Za-z]{5,}" class="form-control" type="text" value="<%= user ? user.get('username') : '' %>">
@@ -82,6 +58,29 @@
                <% }; %>
             </form>
         </script>
+        <script type="text/template" id="statistics-modal-template">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">User Statistics</h4>
+                    </div>
+                    <div class="modal-body">
+                        Min Salary: <span id="min_salary"><%= statistics ? statistics.get('min_salary') : '' %></span></br>
+                        Max Salary: <span id="max_salary"><%= statistics ? statistics.get('max_salary') : '' %></span></br>
+                        Avg Salary: <span id="avg_salary"><%= statistics ? statistics.get('avg_salary') : '' %></span></br>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </script>
+        <script src="bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
+        <script src="bower_components/bootstrap/dist/js/bootstrap.js" type="text/javascript"></script>
+        <script src="bower_components/bootstrapValidator/dist/js/bootstrapValidator.js" type="text/javascript"></script>
+        <script src="bower_components/bootstrapValidator/dist/js/language/zh_CN.js" type="text/javascript"></script>
+        <script src="bower_components/underscore/underscore.js" type="text/javascript"></script>
+        <script src="bower_components/backbone/backbone.js"></script>
         <script src="js/utils.js"></script>
         <script src="js/model/user.js"></script>
         <script src="js/model/statistics.js"></script>
