@@ -37,8 +37,9 @@
         <script src="bower_components/underscore/underscore.js" type="text/javascript"></script>
         <script src="bower_components/backbone/backbone.js"></script>
         <script type="text/template" id="user-list-template">
-            <button id="statistics_button" type="button" class="btn btn-primary" data-toggle="modal">Show statistics</button>
-            <a href="#/new" class="btn btn-primary" id="new-user">New</a>
+            <button id="show_statistics" type="button" class="btn btn-primary" data-toggle="modal">Show statistics</button>
+            &nbsp;
+            <button id="create_user" type="button" class="btn btn-primary" data-toggle="modal">Create User</button>
             <hr />
             <table class="table striped">
               <thead>
@@ -52,7 +53,7 @@
                     <td><%= htmlEncode(user.get('username')) %></td>
                     <td><%= htmlEncode(user.get('age')) %></td>
                     <td><%= htmlEncode(user.get('salary')) %></td>
-                    <td><a class="btn btn-default edit-user" href="#/edit/<%= user.id %>">Edit</a></td>
+                    <td><a class="btn btn-default edit-user" href="#/edit/<%= user.id %>">Edit</a>&nbsp;<button data-user-id="<%= user.id %>" class="btn btn-danger delete">Delete</button></td>
                   </tr>
                 <% }); %>
               </tbody>
@@ -63,21 +64,21 @@
               <legend><%= user ? 'Edit' : 'New' %> User</legend>
             <div class="form-group">
                 <label>Username</label>
-                <input name="username" class="form-control" type="text" value="<%= user ? user.get('username') : '' %>">
+                <input name="username" type="text" required placeholder="Enter username, can only contain numbers or letters, minimum length of 5" pattern="[0-9A-Za-z]{5,}" class="form-control" type="text" value="<%= user ? user.get('username') : '' %>">
             </div>
             <div class="form-group">
                 <label>Age</label>
-                <input name="age" class="form-control" type="text" value="<%= user ? user.get('age') : '' %>">
+                <input name="age" type="number" required placeholder="Enter age, between 1 and 150" min="1" max="150" class="form-control" type="text" value="<%= user ? user.get('age') : '' %>">
             </div>
             <div class="form-group">
                 <label>Salary</label>
-                <input name="salary" class="form-control" type="text" value="<%= user ? user.get('salary') : '' %>">
+                <input name="salary" type="number" required placeholder="Enter salary" min="0" step="any" class="form-control" type="text" value="<%= user ? user.get('salary') : '' %>">
             </div>
                 <hr />
                <button type="submit" class="btn"><%= user ? 'Update' : 'Create' %></button>
+               <button class="btn back">Go Back</button>
                <% if(user) { %>
                 <input type="hidden" name="id" value="<%= user.id %>" />
-               <button data-user-id="<%= user.id %>" class="btn btn-danger delete">Delete</button>
                <% }; %>
             </form>
         </script>

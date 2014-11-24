@@ -7,24 +7,31 @@ var app = app || {};
 		template : _.template($('#edit-user-template').html()),
 		events : {
 			'submit .edit-user-form' : 'saveUser',
-			'click .delete' : 'deleteUser'
+			'click button.back' : 'back'
 		},
 		saveUser : function(ev) {
 			var userDetails = $(ev.currentTarget).serializeObject();
 			var user = new app.User();
 			user.save(userDetails, {
 				success : function(user) {
-					router.navigate('', {
+					app.router.navigate('', {
 						trigger : true
 					});
 				}
 			});
 			return false;
 		},
+        back : function(ev) {
+            // history.go(-1)
+            app.router.navigate('', {
+                trigger : true
+            });
+            return true;
+        },
 		deleteUser : function(ev) {
 			this.user.destroy({
 				success : function() {
-					router.navigate('', {
+					app.router.navigate('', {
 						trigger : true
 					});
 				}

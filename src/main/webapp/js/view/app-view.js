@@ -6,7 +6,9 @@ var app = app || {};
 		el : '.page',
 		template : _.template($('#user-list-template').html()),
         events : {
-            'click #statistics_button' : 'showStatistics'
+            'click #show_statistics' : 'showStatistics',
+            'click #create_user' : 'createUser',
+            'click .delete' : 'deleteUser'
         },
 		render : function() {
 			var that = this;
@@ -21,7 +23,24 @@ var app = app || {};
 		},
 		showStatistics : function() {
 		    new app.StatisticsView().render();
-		}
+		},
+        createUser : function() {
+          app.router.navigate('create', {
+              trigger : true
+          });
+        },
+        deleteUser : function(ev) {
+            var that = this;
+            // find the model
+            var user = app.users.filterWithIds([parseInt($(ev.target).attr('data-user-id'))])._wrapped[0];
+            user.destroy({
+                success : function() {
+                    // re-render UserListView
+                    that.render();
+                }
+            });
+            
+        }
 	});
     app.userListView = new app.UserListView();
 })(jQuery);
