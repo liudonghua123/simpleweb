@@ -44,7 +44,9 @@ public class UserDaoImpl implements UserDao {
 			// com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: The last packet successfully received from the server was 140,287,058 milliseconds ago.  The last packet sent successfully to the server was 140,287,058 milliseconds ago. is longer than the server configured value of 'wait_timeout'. You should consider either expiring and/or testing connection validity before use in your application, increasing the server configured values for client timeouts, or using the Connector/J connection property 'autoReconnect=true' to avoid this problem.
 			// http://stackoverflow.com/questions/667289/why-does-autoreconnect-true-not-seem-to-work
 			// try re-connect is possible
-			tryReconnectConnectionIfNeeded();
+			if(tryReconnectConnectionIfNeeded()) {
+				return addUser(user);
+			}
 		}
 		return id;
 	}
@@ -61,7 +63,9 @@ public class UserDaoImpl implements UserDao {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			tryReconnectConnectionIfNeeded();
+			if(tryReconnectConnectionIfNeeded()) {
+				deleteUser(id);
+			}
 		}
 	}
 
@@ -81,7 +85,9 @@ public class UserDaoImpl implements UserDao {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			tryReconnectConnectionIfNeeded();
+			if(tryReconnectConnectionIfNeeded()) {
+				updateUser(user);
+			}
 		}
 	}
 
@@ -104,7 +110,9 @@ public class UserDaoImpl implements UserDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			tryReconnectConnectionIfNeeded();
+			if(tryReconnectConnectionIfNeeded()) {
+				return getAllUsers();
+			}
 		}
 
 		return users;
@@ -129,7 +137,9 @@ public class UserDaoImpl implements UserDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			tryReconnectConnectionIfNeeded();
+			if(tryReconnectConnectionIfNeeded()) {
+				return getUserById(id);
+			}
 		}
 
 		return user;
@@ -154,15 +164,17 @@ public class UserDaoImpl implements UserDao {
 		return userStatistics;
 	}
 
-	private void tryReconnectConnectionIfNeeded() {
+	private boolean tryReconnectConnectionIfNeeded() {
 		try {
-			// given 5 seconds timeout
+			// given 5 seconds timeout to reconnect
 			if(!connection.isValid(5)) {
 				connection = DatabaseUtil.reconnect();
+				return true;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 
 }
