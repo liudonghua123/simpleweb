@@ -41,6 +41,10 @@ public class UserDaoImpl implements UserDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			// com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: The last packet successfully received from the server was 140,287,058 milliseconds ago.  The last packet sent successfully to the server was 140,287,058 milliseconds ago. is longer than the server configured value of 'wait_timeout'. You should consider either expiring and/or testing connection validity before use in your application, increasing the server configured values for client timeouts, or using the Connector/J connection property 'autoReconnect=true' to avoid this problem.
+			// http://stackoverflow.com/questions/667289/why-does-autoreconnect-true-not-seem-to-work
+			// try re-connect is possible
+			tryReconnectConnectionIfNeeded();
 		}
 		return id;
 	}
@@ -57,6 +61,7 @@ public class UserDaoImpl implements UserDao {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			tryReconnectConnectionIfNeeded();
 		}
 	}
 
@@ -76,6 +81,7 @@ public class UserDaoImpl implements UserDao {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			tryReconnectConnectionIfNeeded();
 		}
 	}
 
@@ -98,6 +104,7 @@ public class UserDaoImpl implements UserDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			tryReconnectConnectionIfNeeded();
 		}
 
 		return users;
@@ -122,6 +129,7 @@ public class UserDaoImpl implements UserDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			tryReconnectConnectionIfNeeded();
 		}
 
 		return user;
@@ -140,9 +148,21 @@ public class UserDaoImpl implements UserDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			tryReconnectConnectionIfNeeded();
 		}
 
 		return userStatistics;
+	}
+
+	private void tryReconnectConnectionIfNeeded() {
+		try {
+			// given 5 seconds timeout
+			if(!connection.isValid(5)) {
+				connection = DatabaseUtil.reconnect();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

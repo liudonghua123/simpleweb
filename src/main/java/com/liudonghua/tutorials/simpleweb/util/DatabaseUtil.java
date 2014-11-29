@@ -40,5 +40,19 @@ public class DatabaseUtil {
 		}
 
 	}
+	
+	public static Connection reconnect() {
+		if(connection != null) {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			finally {
+				connection = null;
+			}
+		}
+		return getConnection();
+	}
 
 }
